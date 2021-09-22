@@ -1,0 +1,10 @@
+agents=10, total_store=811.25
+agents=20, total_store=1684.1511825642463
+agents=30, total_store=2112.6987209835097
+agents=40, total_store=2775.9638020080833
+agents=50, total_store=3285.668288634633
+agents=60, total_store=4645.3335318094005
+agents=70, total_store=5117.217110427305
+agents=80, total_store=6083.928648511896
+agents=90, total_store=6628.388152343159
+agents=100, total_store=8091.037585204899
