@@ -7,7 +7,6 @@ Created on Tue Sep 14 12:33:27 2021
 import matplotlib.pyplot
 import agentframework
 import csv
-import random
 
 # Create empty list for environment raster data
 environment = []
@@ -29,7 +28,7 @@ neighbourhood = 20
 # Create empty list for agents
 agents = []
 
-
+# Draw plot
 fig = matplotlib.pyplot.figure(figsize = (7,7))
 ax = fig.add_axes([0, 0, 1, 1])
 
@@ -50,6 +49,7 @@ def update(frame_number):
     for i in range(num_of_agents):
         agents[i].move()
         agents[i].eat()
+        agents[i].throw_up()
         agents[i].share_with_neighbours(neighbourhood)    
     
     # Plot agents
