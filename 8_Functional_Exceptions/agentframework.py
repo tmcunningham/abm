@@ -50,16 +50,14 @@ class Agent():
             self.store = self.environment[self.y][self.x]
             self.environment[self.y][self.x] = 0
         
-        # Make agent throw up store if eaten over 100 units
+    def throw_up(self):
         if self.store > 100:
             self.environment[self.y][self.x] += self.store
-            self.store = 0
-        
+            self.store = 0   
     
     def distance_between(self, other_agent):
         return ((self.x-other_agent.x)**2 + (self.y-other_agent.y)**2)**0.5
-
-            
+      
     def share_with_neighbours(self, neighbourhood):
         #print(neighbourhood) - check the method works
         # Loop through the agents in self.agents .
