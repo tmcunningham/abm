@@ -7,6 +7,7 @@ Created on Tue Sep 14 12:33:27 2021
 import matplotlib.pyplot
 import agentframework
 import csv
+import random
 
 # Create empty list for environment raster data
 environment = []
@@ -34,7 +35,9 @@ ax = fig.add_axes([0, 0, 1, 1])
 
 # Create agents
 for i in range(num_of_agents):
-    agents.append(agentframework.Agent(environment, agents))
+    agents.append(agentframework.Agent(id = i, 
+                                       environment = environment, 
+                                       agents = agents))
 
 # Create stopping condition for animation
 carry_on = True
@@ -47,10 +50,12 @@ def update(frame_number):
     
     # Move agents.
     for i in range(num_of_agents):
+        print(agents[i])
+        random.shuffle(agents)
         agents[i].move()
         agents[i].eat()
         agents[i].throw_up()
-        agents[i].share_with_neighbours(neighbourhood)    
+        agents[i].share_with_neighbours(neighbourhood)
     
     # Plot agents
     matplotlib.pyplot.imshow(environment)

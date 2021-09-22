@@ -7,15 +7,17 @@ Created on Thu Sep 16 13:33:53 2021
 import random
 
 class Agent():
-    def __init__(self, environment, agents):
+    def __init__(self, id, environment, agents):
         self._x = random.randint(0, len(environment[0]))
         self._y = random.randint(0, len(environment))
         self.environment = environment
         self.store = 0 
         self.agents = agents
+        self.id = id
     
     def __str__(self):
-        return "x: " + str(self.x) + ", " + \
+        return "id: " + str(self.id) + ", " + \
+            "x: " + str(self.x) + ", " + \
             "y: " + str(self.y) + ", " + \
             "store: " + str(self.store)
     
