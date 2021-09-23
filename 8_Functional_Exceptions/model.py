@@ -21,13 +21,16 @@ with open('in.txt', newline='') as f:
             rowlist.append(value)
         environment.append(rowlist)
 
-# Set number of agents and number, random movements and size of neighbourhood
-num_of_agents = 10
+# Set number of sheep, random movements and size of neighbourhood
+num_of_sheeps = 100
+num_of_wolves = 5
 num_of_moves = 100
-neighbourhood = 20
+sheep_neighbourhood = 20
+wolf_neighbourhood = 20
 
-# Create empty list for agents
-agents = []
+# Create empty list for sheep
+sheeps = []
+wolves = []
 
 # Get list of tableau colour palette
 colors = list(matplotlib.colors.TABLEAU_COLORS.values())
@@ -36,11 +39,18 @@ colors = list(matplotlib.colors.TABLEAU_COLORS.values())
 fig = matplotlib.pyplot.figure(figsize = (7,7))
 ax = fig.add_axes([0, 0, 1, 1])
 
-# Create agents
-for i in range(num_of_agents):
-    agents.append(agentframework.Agent(id = i, 
+# Create sheeps
+for i in range(num_of_sheeps):
+    sheeps.append(agentframework.Sheep(id = i, 
                                        environment = environment, 
-                                       agents = agents))
+                                       agents = sheeps,
+                                       speed = 1))
+
+for i in range(num_of_wolves):
+    wolves.append(agentframework.Wolf(id = i, 
+                                      environment = environment, 
+                                      agents = sheeps,
+                                      speed = 5))
 
 # Create stopping condition for animation
 carry_on = True
@@ -51,30 +61,46 @@ def update(frame_number):
     global carry_on
     fig.clear()
     
-    # Move agents.
-    for i in range(num_of_agents):
-        print(agents[i])
-        random.shuffle(agents)
-        agents[i].move()
-        agents[i].eat()
-        agents[i].throw_up()
-        agents[i].share_with_neighbours(neighbourhood)
+    # Move sheeps.
+    for i in range(len(sheeps)):
+        #print(sheeps[i])
+        random.shuffle(sheeps)
+        
+        sheeps[i].move()
+        sheeps[i].eat()
+        sheeps[i].throw_up()
+        sheeps[i].share_with_neighbours(sheep_neighbourhood)
+        
+    for i in range(len(wolves)):
+        #print(wolves[i])
+        random.shuffle(wolves)
+        
+        wolves[i].move()
+        wolves[i].eat(wolf_neighbourhood)
     
-    # Plot agents
+    # Plot sheeps
     matplotlib.pyplot.imshow(environment)
-    for i in range(num_of_agents):
-        matplotlib.pyplot.scatter(x = agents[i].x, y = agents[i].y,
-                                  #color = "white"
-                                  color = colors[agents[i].id % len(colors)])
+    for i in range(len(sheeps)):
+        matplotlib.pyplot.scatter(x = sheeps[i].x, y = sheeps[i].y,
+                                  color = "white"
+                                  #color = colors[sheeps[i].id % len(colors)]
+                                  )
     
-    # Create list of all agents stores
-    #stores = [int(agent.store) for agent in agents]
+    for i in range(len(wolves)):
+        matplotlib.pyplot.scatter(x = wolves[i].x, y = wolves[i].y,
+                                  color = "black"
+                                  #color = colors[wolves[i].id % len(colors)]
+                                  )
+    
+    
+    # Create list of all sheeps stores
+    #stores = [int(sheep.store) for sheep in sheeps]
     #print(stores)
     
-    # Update stopping condition if all agents have oer 70 store
-    if (all(i > 70 for i in [agent.store for agent in agents])):
+    # Update stopping condition if all sheeps have oer 70 store
+    if (all(i > 1000 for i in [sheep.store for sheep in sheeps])):
         carry_on = False
-        print("stopping condition - all agents have over 70 store")
+        print("stopping condition - all sheeps have over 70 store")
         
 
 # Stop animation before max number of moves or if stopping condition met
@@ -85,11 +111,15 @@ def gen_function():
         yield i
         i += 1
 
-# Animate plot of agents on environment
+# Animate plot of sheeps on environment
 animation = matplotlib.animation.FuncAnimation(fig, update, interval=1, 
                                                repeat = False, 
                                                frames = gen_function())    
 matplotlib.pyplot.show()
+
+
+print("Sheep left: " + str(len(sheeps)) + "\n" +
+      "Survival rate: " + str(len(sheeps)/num_of_sheeps))
 
 # Write new environment
 with open("out.txt", "w", newline = "") as f2:
@@ -97,15 +127,15 @@ with open("out.txt", "w", newline = "") as f2:
     for row in environment:
         writer.writerow(row)
 
-# Get list of agents current stores
-agent_stores = []
-for agent in agents:
-    agent_stores.append(agent.store)
+# Get list of sheeps current stores
+sheep_stores = []
+for sheep in sheeps:
+    sheep_stores.append(sheep.store)
 
-# Write agents current stores to a file
-with open("agent stores.txt", "a", newline = "") as f3:
+# Write sheeps current stores to a file
+with open("sheep stores.txt", "a", newline = "") as f3:
     writer = csv.writer(f3, delimiter = ",")
-    writer.writerow(agent_stores)
+    writer.writerow(sheep_stores)
 
-# Check agent creation is including other agents
-# print(agents[0].agents[1].x, agents[1].x, agents[0].x)
+# Check sheep creation is including other sheeps
+# print(sheeps[0].sheeps[1].x, sheeps[1].x, sheeps[0].x)
