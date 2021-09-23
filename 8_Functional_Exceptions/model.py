@@ -29,6 +29,9 @@ neighbourhood = 20
 # Create empty list for agents
 agents = []
 
+# Get list of tableau colour palette
+colors = list(matplotlib.colors.TABLEAU_COLORS.values())
+
 # Draw plot
 fig = matplotlib.pyplot.figure(figsize = (7,7))
 ax = fig.add_axes([0, 0, 1, 1])
@@ -60,7 +63,9 @@ def update(frame_number):
     # Plot agents
     matplotlib.pyplot.imshow(environment)
     for i in range(num_of_agents):
-        matplotlib.pyplot.scatter(agents[i].x,agents[i].y)
+        matplotlib.pyplot.scatter(x = agents[i].x, y = agents[i].y,
+                                  #color = "white"
+                                  color = colors[agents[i].id % len(colors)])
     
     # Create list of all agents stores
     #stores = [int(agent.store) for agent in agents]
