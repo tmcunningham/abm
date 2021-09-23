@@ -8,9 +8,18 @@ import random
 import operator
 
 class Agent():
-    def __init__(self, id, speed, environment, agents):
-        self._x = random.randint(0, len(environment[0]))
-        self._y = random.randint(0, len(environment))
+    def __init__(self, id, speed, environment, agents,
+                 x = None, y = None,):
+        if x == None:
+            self._x = random.randint(0, len(environment[0]))
+        else:
+            self._x = x
+            
+        if y == None:
+            self._y = random.randint(0, len(environment[0]))
+        else:
+            self._y = y
+            
         self.environment = environment
         self.store = 0 
         self.agents = agents

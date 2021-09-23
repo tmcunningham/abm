@@ -9,8 +9,21 @@ import agentframework
 import csv
 import random
 import tkinter
+import requests
+import bs4
 
+# use tkinter backend
 matplotlib.use("TkAgg")
+
+# Get data for sheep xs and ys
+r = requests.get("https://www.geog.leeds.ac.uk/courses/computing/practicals/python/agent-framework/part9/data.html")
+# Check response is 200
+#print(r)
+
+# Parse HTML and read ys and xs
+soup = bs4.BeautifulSoup(r.text, "html.parser")
+td_ys = soup.find_all(attrs={"class" : "y"})
+td_xs = soup.find_all(attrs={"class" : "x"})
 
 # Create empty list for environment raster data
 environment = []
@@ -24,14 +37,14 @@ with open('in.txt', newline='') as f:
             rowlist.append(value)
         environment.append(rowlist)
 
-# Set number of sheep, random movements and size of neighbourhood
-num_of_sheeps = 100
+# Set number of sheep, wolves, random movements and size of neighbourhood
+num_of_sheeps = 110
 num_of_wolves = 5
 num_of_moves = 100
 sheep_neighbourhood = 20
 wolf_neighbourhood = 20
 
-# Create empty list for sheep
+# Create empty list for sheep and wolves
 sheeps = []
 wolves = []
 
@@ -44,18 +57,33 @@ ax = fig.add_axes([0, 0, 1, 1])
 
 # Create sheeps
 for i in range(num_of_sheeps):
-    sheeps.append(agentframework.Sheep(id = i, 
+    
+    # Use data from web for xs and ys if it exists - after that use random int
+    if i < len(td_ys):
+        y = int(td_ys[i].text)
+    else:
+        y = None
+    
+    if i < len(td_xs):
+        x = int(td_xs[i].text)
+    else:
+        x = None
+    
+    sheeps.append(agentframework.Sheep(id = i,
+                                       x = x,
+                                       y = y,
                                        environment = environment, 
                                        agents = sheeps,
                                        speed = 1))
 
+# Create wolves
 for i in range(num_of_wolves):
     wolves.append(agentframework.Wolf(id = i, 
                                       environment = environment, 
                                       agents = sheeps,
                                       speed = 5))
 
-# Create stopping condition for animation
+# Create stopping condition for animation - runs if true
 carry_on = True
 
 # Define update function for animation
@@ -69,17 +97,18 @@ def update(frame_number):
         #print(sheeps[i])
         random.shuffle(sheeps)
         
-        sheeps[i].move()
         sheeps[i].eat()
         sheeps[i].throw_up()
+        sheeps[i].move()
         sheeps[i].share_with_neighbours(sheep_neighbourhood)
         
     for i in range(len(wolves)):
         #print(wolves[i])
         random.shuffle(wolves)
         
-        wolves[i].move()
         wolves[i].eat(wolf_neighbourhood)
+        wolves[i].move()
+        
 
     # Plot sheeps
     matplotlib.pyplot.imshow(environment)
@@ -128,7 +157,7 @@ def gen_function():
         for sheep in sheeps:
             sheep_stores.append(sheep.store)
             
-        print(sheep_stores)
+        #print(sheep_stores)
         
         # Write sheeps current stores to a file
         with open("sheep stores.txt", "a", newline = "") as f3:
@@ -139,8 +168,8 @@ def gen_function():
 # Animate plot of sheeps on environment
 def run():
     animation = matplotlib.animation.FuncAnimation(fig, update, interval=1, 
-                                               repeat = False, 
-                                               frames = gen_function())
+                                                   repeat = False, 
+                                                   frames = gen_function())
     canvas.draw()
 
 root = tkinter.Tk()
@@ -152,5 +181,8 @@ root.config(menu=menu_bar)
 model_menu = tkinter.Menu(menu_bar)
 menu_bar.add_cascade(label="Model", menu=model_menu)
 model_menu.add_command(label="Run model", command=run)
+model_menu.add_command(label = "Clear", command = fig.clear)
 
 tkinter.mainloop()
+
+
