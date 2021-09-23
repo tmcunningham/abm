@@ -92,16 +92,18 @@ class Wolf(Agent):
     def eat(self, neighbourhood):
         distances = []
         sheeps = [agent for agent in self.agents if isinstance(agent, Sheep)]
-        for sheep in sheeps:
-            distances.append(self.distance_between(sheep))
-        min_distance = min(enumerate(distances), key = operator.itemgetter(1))
-        closest_sheep = sheeps[min_distance[0]]
-        if min_distance[1] < neighbourhood:
-            self.x = closest_sheep.x
-            self.y = closest_sheep.y
-            self.store += 1
-            self.agents.remove(closest_sheep)
-            print("A sheep was eaten! \n " + str(closest_sheep))
+        
+        if len(sheeps) > 0:
+            for sheep in sheeps:
+                distances.append(self.distance_between(sheep))
+            min_distance = min(enumerate(distances), key = operator.itemgetter(1))
+            closest_sheep = sheeps[min_distance[0]]
+            if min_distance[1] < neighbourhood:
+                self.x = closest_sheep.x
+                self.y = closest_sheep.y
+                self.store += 1
+                self.agents.remove(closest_sheep)
+                print("A sheep was eaten! \n " + str(closest_sheep))
 
     
        

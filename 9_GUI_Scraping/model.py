@@ -38,11 +38,11 @@ with open('in.txt', newline='') as f:
         environment.append(rowlist)
 
 # Set number of sheep, wolves, random movements and size of neighbourhood
-num_of_sheeps = 110
-num_of_wolves = 5
+num_of_sheeps = 50
+num_of_wolves = 15
 num_of_moves = 100
 sheep_neighbourhood = 20
-wolf_neighbourhood = 20
+wolf_neighbourhood = 30
 
 # Create empty list for sheep and wolves
 sheeps = []
@@ -81,7 +81,7 @@ for i in range(num_of_wolves):
     wolves.append(agentframework.Wolf(id = i, 
                                       environment = environment, 
                                       agents = sheeps,
-                                      speed = 5))
+                                      speed = 3))
 
 # Create stopping condition for animation - runs if true
 carry_on = True
@@ -129,11 +129,17 @@ def update(frame_number):
     #stores = [int(sheep.store) for sheep in sheeps]
     #print(stores)
     
+    """
     # Update stopping condition if all sheeps have over 70 store
     if (all(i > 70 for i in [sheep.store for sheep in sheeps])):
         carry_on = False
         print("stopping condition - all sheeps have over 70 store")
-
+    """
+    
+    if (len(sheeps) == 0):
+        carry_on = False
+        print("The wolves have won! All the sheep have been eaten!")
+    
 # Stop animation before max number of moves or if stopping condition met
 def gen_function():
     global carry_on
@@ -144,7 +150,7 @@ def gen_function():
     else:
         carry_on = False
         print("Sheep left: " + str(len(sheeps)) + "\n" +
-                  "Survival rate: " + str(len(sheeps)/num_of_sheeps))
+              "Survival rate: " + str(len(sheeps)/num_of_sheeps))
         
         # Write new environment
         with open("out.txt", "w", newline = "") as f2:
