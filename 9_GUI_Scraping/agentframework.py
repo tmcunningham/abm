@@ -56,7 +56,7 @@ class Agent():
             self._y = (self._y - self.speed) % len(self.environment)
     
     def distance_between(self, other_agent):
-        return ((self.x-other_agent.x)**2 + (self.y-other_agent.y)**2)**0.5
+        return ((self.x - other_agent.x)**2 + (self.y - other_agent.y)**2)**0.5
              
     x = property(get_x, set_x, "x property")
     y = property(get_y, set_y, "y property")

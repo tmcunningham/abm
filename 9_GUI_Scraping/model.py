@@ -21,7 +21,7 @@ matplotlib.pyplot.ioff()
 # Get data for sheep xs and ys
 r = requests.get("https://www.geog.leeds.ac.uk/courses/computing/practicals/python/agent-framework/part9/data.html")
 # Check response is 200
-#print(r)
+# print(r)
 
 # Parse HTML and read ys and xs
 soup = bs4.BeautifulSoup(r.text, "html.parser")
@@ -41,8 +41,8 @@ with open('in.txt', newline='') as f:
         environment.append(rowlist)
 
 # Set number of sheep, wolves, random movements and size of neighbourhood
-num_of_sheeps = 50
-num_of_wolves = 1
+num_of_sheeps = 200
+num_of_wolves = 5
 num_of_moves = 1000
 sheep_neighbourhood = 20
 wolf_neighbourhood = 30
@@ -50,9 +50,6 @@ wolf_neighbourhood = 30
 # Create empty list for sheep and wolves
 sheeps = []
 wolves = []
-
-# Get list of tableau colour palette
-colors = list(matplotlib.colors.TABLEAU_COLORS.values())
 
 # Draw plot
 fig = matplotlib.pyplot.figure(figsize = (7,7), frameon = False)
@@ -118,13 +115,11 @@ def update(frame_number):
     for i in range(len(sheeps)):
         matplotlib.pyplot.scatter(x = sheeps[i].x, y = sheeps[i].y,
                                   color = "white"
-                                  #color = colors[sheeps[i].id % len(colors)]
                                   )
     
     for i in range(len(wolves)):
         matplotlib.pyplot.scatter(x = wolves[i].x, y = wolves[i].y,
                                   color = "black"
-                                  #color = colors[wolves[i].id % len(colors)]
                                   )
         matplotlib.pyplot.xlim(0, len(environment[0]))
         matplotlib.pyplot.ylim(0, len(environment))
