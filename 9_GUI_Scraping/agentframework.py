@@ -16,7 +16,7 @@ class Agent():
             self._x = x
             
         if y == None:
-            self._y = random.randint(0, len(environment[0]))
+            self._y = random.randint(0, len(environment))
         else:
             self._y = y
             
