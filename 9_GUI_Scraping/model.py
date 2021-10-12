@@ -16,7 +16,7 @@ import bs4
 # use tkinter backend
 matplotlib.use("TkAgg")
 
-matplotlib.pyplot.ioff()
+#matplotlib.pyplot.ioff()
 
 # Get data for sheep xs and ys
 r = requests.get("https://www.geog.leeds.ac.uk/courses/computing/practicals/python/agent-framework/part9/data.html")
