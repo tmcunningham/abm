@@ -2,7 +2,7 @@
 """
 Created on Tue Sep 14 12:33:27 2021
 
-@author: tcunn
+@author: Tom Cunningham
 """
 import matplotlib
 import matplotlib.animation
