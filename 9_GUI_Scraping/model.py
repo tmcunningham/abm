@@ -53,7 +53,7 @@ wolves = []
 
 # Draw plot
 fig = matplotlib.pyplot.figure(figsize = (7,7), frameon = False)
-fig.add_axes([0, 0, 1, 1])
+#fig.add_axes([0, 0, 1, 1])
 
 # Create sheeps
 for i in range(num_of_sheeps):

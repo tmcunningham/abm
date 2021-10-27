@@ -60,12 +60,12 @@ class Agent():
             co-ordinate within the environment.
         """
         if x == None:
-            self._x = random.randint(0, len(environment[0]))
+            self._x = random.randint(0, len(environment[0]) - 1)
         else:
             self._x = x
             
         if y == None:
-            self._y = random.randint(0, len(environment))
+            self._y = random.randint(0, len(environment) - 1)
         else:
             self._y = y
             
