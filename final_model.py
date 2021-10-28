@@ -5,6 +5,8 @@ Created on Tue Sep 14 12:33:27 2021
 @author: Tom Cunningham
 """
 import matplotlib
+#matplotlib.use("TkAgg")
+
 import matplotlib.animation
 import agentframework
 import csv

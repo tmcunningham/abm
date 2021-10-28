@@ -4,18 +4,17 @@ Created on Tue Sep 14 12:33:27 2021
 
 @author: Tom Cunningham
 """
-import matplotlib
+import tkinter
+import matplotlib.pyplot
 import matplotlib.animation
 import agentframework
 import csv
 import random
-import tkinter
 import requests
 import bs4
 
 # use tkinter backend
 matplotlib.use("TkAgg")
-
 #matplotlib.pyplot.ioff()
 
 # Get data for sheep xs and ys
