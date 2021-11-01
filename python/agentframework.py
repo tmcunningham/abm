@@ -186,8 +186,8 @@ class Sheep(Agent):
             neighbourhood : int
                 The distance within which to look for another agent.
         """
-        #print(neighbourhood) - check the method works
-        # Loop through the agents in self.agents .
+        # print(neighbourhood) # Check the method works
+        # Loop through the agents in self.agents
         for agent in self.agents:
             # Calculate the distance between self and the current other agent:
             distance = self.distance_between(agent)

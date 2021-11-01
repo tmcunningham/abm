@@ -4,6 +4,8 @@ Created on Tue Sep 14 12:33:27 2021
 
 @author: Tom Cunningham
 """
+
+# Set backend for matplotlib
 import matplotlib
 matplotlib.use("TkAgg")
 
@@ -17,10 +19,9 @@ import requests
 import bs4
 import sys
 
-#matplotlib.pyplot.ioff()
-
 # Get data for sheep xs and ys
 r = requests.get("https://www.geog.leeds.ac.uk/courses/computing/practicals/python/agent-framework/part9/data.html")
+
 # Check response is 200
 # print(r)
 
@@ -42,6 +43,7 @@ with open('in.txt', newline='') as f:
         environment.append(rowlist)
 
 # Set number of sheep, wolves, random movements and size of neighbourhood
+# Use arguments given or use defaults if not all arguments provided as ints
 try:
     num_of_sheeps = int(sys.argv[1])
     num_of_wolves = int(sys.argv[2])
@@ -67,7 +69,7 @@ except ValueError:
           "Defaulting to 200 sheep, 5 wolves, 1,000 moves, " + 
           "20 sheep neighbourhood and 30 wolf neighbourhood.")
 
-# Create empty list for sheep and wolves
+# Create empty lists for sheep and wolves
 sheeps = []
 wolves = []
 
@@ -112,7 +114,7 @@ def update(frame_number):
     global carry_on
     fig.clear()
     
-    # Move sheeps.
+    # Move sheeps
     for i in range(len(sheeps)):
         #print(sheeps[i])
         random.shuffle(sheeps)
@@ -143,12 +145,11 @@ def update(frame_number):
                                   )
         matplotlib.pyplot.xlim(0, len(environment[0]))
         matplotlib.pyplot.ylim(0, len(environment))
-
     
     
     # Create list of all sheeps stores
-    #stores = [int(sheep.store) for sheep in sheeps]
-    #print(stores)
+    # stores = [int(sheep.store) for sheep in sheeps]
+    # print(stores)
     
     """
     # Update stopping condition if all sheeps have over 70 store
@@ -235,6 +236,7 @@ model_menu = tkinter.Menu(menu_bar)
 menu_bar.add_cascade(label="Model", menu=model_menu)
 model_menu.add_command(label="Run model", command=run)
 model_menu.add_command(label = "Pause", command = pause)
+model_menu.add_command(label = "Quit", command = root.destroy)
 
 
 tkinter.mainloop()
