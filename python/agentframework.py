@@ -208,7 +208,7 @@ class Wolf(Agent):
         If there is a sheep within the neighbourhood of this wolf, remove the 
         sheep from the list of agents and add one to the wolf's store.
     """
-    def eat(self, neighbourhood):
+    def eat(self, neighbourhood, silent = False):
         """
         If there is a sheep within the neighbourhood of this wolf, remove the 
         sheep from the list of agents and add one to the wolf's store.
@@ -221,6 +221,8 @@ class Wolf(Agent):
         ----------
         neighbourhood : int
             The distance within which to look for a sheep.
+        silent : bool
+            Whether to print a message when a sheep is eaten. Defaults to False.
         """
         distances = []
         sheeps = [agent for agent in self.agents if isinstance(agent, Sheep)]
@@ -235,7 +237,8 @@ class Wolf(Agent):
                 self.y = closest_sheep.y
                 self.store += 1
                 self.agents.remove(closest_sheep)
-                print("A sheep was eaten! \n " + str(closest_sheep))
+                if not silent:
+                    print("A sheep was eaten! \n " + str(closest_sheep))
 
     
        

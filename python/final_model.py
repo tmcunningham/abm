@@ -69,6 +69,20 @@ except ValueError:
           "Defaulting to 200 sheep, 5 wolves, 1,000 moves, " + 
           "20 sheep neighbourhood and 30 wolf neighbourhood.")
 
+# Set whether message should be printed when each sheep is eaten based on input
+silent_input = str(input("Receive message when a sheep is eaten? (Y/N):\n"))
+
+# Set silent based on input. If not recognised, default to silent = True
+if silent_input.upper() == "Y":
+    print("Messages will not be muted.\n")
+    silent = False
+elif silent_input.upper() == "N":
+    print("Messages will be muted.\n")
+    silent = True
+else:
+    print("Could not recognise input. Messages will be muted.\n")
+    silent = True
+    
 # Create empty lists for sheep and wolves
 sheeps = []
 wolves = []
@@ -123,12 +137,13 @@ def update(frame_number):
         sheeps[i].throw_up()
         sheeps[i].move()
         sheeps[i].share_with_neighbours(sheep_neighbourhood)
-        
+    
+    # Move wolves
     for i in range(len(wolves)):
         #print(wolves[i])
         random.shuffle(wolves)
         
-        wolves[i].eat(wolf_neighbourhood)
+        wolves[i].eat(wolf_neighbourhood, silent)
         wolves[i].move()
         
 
@@ -139,6 +154,7 @@ def update(frame_number):
                                   color = "white"
                                   )
     
+    # Plot wolves
     for i in range(len(wolves)):
         matplotlib.pyplot.scatter(x = wolves[i].x, y = wolves[i].y,
                                   color = "black"
@@ -172,9 +188,7 @@ def update(frame_number):
         sheep_stores = []
         for sheep in sheeps:
             sheep_stores.append(sheep.store)
-            
-        #print(sheep_stores)
-        
+                    
         # Write sheeps current stores to a file
         with open("sheep stores.txt", "w", newline = "") as f3:
             writer = csv.writer(f3, delimiter = ",")
@@ -203,7 +217,7 @@ def gen_function():
         for sheep in sheeps:
             sheep_stores.append(sheep.store)
             
-        #print(sheep_stores)
+        # print(sheep_stores)
         
         # Write sheeps current stores to a file
         with open("sheep stores.txt", "a", newline = "") as f3:
@@ -225,7 +239,8 @@ def pause():
         animation.event_source.stop()
     except:
         print("No animation")
-        
+    
+
 root = tkinter.Tk()
 root.wm_title("Model")
 canvas = matplotlib.backends.backend_tkagg.FigureCanvasTkAgg(fig, master = root)
@@ -233,8 +248,8 @@ canvas._tkcanvas.pack(side = tkinter.TOP, fill = tkinter.BOTH, expand = 1)
 menu_bar = tkinter.Menu(root)
 root.config(menu=menu_bar)
 model_menu = tkinter.Menu(menu_bar)
-menu_bar.add_cascade(label="Model", menu=model_menu)
-model_menu.add_command(label="Run model", command=run)
+menu_bar.add_cascade(label = "Model", menu=model_menu)
+model_menu.add_command(label= "Run model", command=run)
 model_menu.add_command(label = "Pause", command = pause)
 model_menu.add_command(label = "Quit", command = root.destroy)
 
