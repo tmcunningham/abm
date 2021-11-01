@@ -162,6 +162,23 @@ def update(frame_number):
         carry_on = False
         print("The wolves have won! All the sheep have been eaten!")
     
+        with open("out.txt", "w", newline = "") as f2:
+            writer = csv.writer(f2, delimiter = ",")
+            for row in environment:
+                writer.writerow(row)
+                
+        # Get list of sheeps current stores
+        sheep_stores = []
+        for sheep in sheeps:
+            sheep_stores.append(sheep.store)
+            
+        #print(sheep_stores)
+        
+        # Write sheeps current stores to a file
+        with open("sheep stores.txt", "w", newline = "") as f3:
+            writer = csv.writer(f3, delimiter = ",")
+            writer.writerow(sheep_stores)
+    
 # Stop animation before max number of moves or if stopping condition met
 def gen_function():
     global carry_on
