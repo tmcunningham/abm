@@ -27,9 +27,10 @@ Where the arguments are (default values given after argument names):
 
 Please note, **all** of the arguments must be specified. If arguments are missing, or if they are not provided as integers, the default values will be used in the model.
 
-When the above code is run, a GUI will be launched with a "Menu" dropdown icon in the menu bar. The "Menu" dropdown has two options:
+When the above code is run, a GUI will be launched with a "Model" dropdown icon in the menu bar. The "Model" dropdown has three options:
 - **Run model:** initiate the model. An animation will begin to play in the current window.
 - **Pause:** when the model is running, pause the animation. Select "Run model" again to resume.
+- **Quit:** end instance of tkinter.
 
 Once the model has been started, it cannot be re-run without restarting the programme.
 
