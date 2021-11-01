@@ -5,8 +5,9 @@ Created on Tue Sep 14 12:33:27 2021
 @author: Tom Cunningham
 """
 import matplotlib
-#matplotlib.use("TkAgg")
+matplotlib.use("TkAgg")
 
+import matplotlib.pyplot
 import matplotlib.animation
 import agentframework
 import csv
@@ -14,9 +15,7 @@ import random
 import tkinter
 import requests
 import bs4
-
-# use tkinter backend
-matplotlib.use("TkAgg")
+import sys
 
 #matplotlib.pyplot.ioff()
 
@@ -43,11 +42,30 @@ with open('in.txt', newline='') as f:
         environment.append(rowlist)
 
 # Set number of sheep, wolves, random movements and size of neighbourhood
-num_of_sheeps = 200
-num_of_wolves = 5
-num_of_moves = 1000
-sheep_neighbourhood = 20
-wolf_neighbourhood = 30
+try:
+    num_of_sheeps = int(sys.argv[1])
+    num_of_wolves = int(sys.argv[2])
+    num_of_moves = int(sys.argv[3])
+    sheep_neighbourhood = int(sys.argv[4])
+    wolf_neighbourhood = int(sys.argv[5])
+except IndexError:
+    num_of_sheeps = 200
+    num_of_wolves = 5
+    num_of_moves = 1000
+    sheep_neighbourhood = 20
+    wolf_neighbourhood = 30
+    print("Inputs not all provided. " +
+          "Defaulting to 200 sheep, 5 wolves, 1,000 moves, " + 
+          "20 sheep neighbourhood and 30 wolf neighbourhood.")
+except ValueError:
+    num_of_sheeps = 200
+    num_of_wolves = 5
+    num_of_moves = 1000
+    sheep_neighbourhood = 20
+    wolf_neighbourhood = 30
+    print("Inputs not valid integers. " +
+          "Defaulting to 200 sheep, 5 wolves, 1,000 moves, " + 
+          "20 sheep neighbourhood and 30 wolf neighbourhood.")
 
 # Create empty list for sheep and wolves
 sheeps = []
