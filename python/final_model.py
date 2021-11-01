@@ -248,7 +248,12 @@ def pause():
         animation.event_source.stop()
     except:
         print("No animation")
-    
+        
+
+def exit_model():
+    global root
+    root.quit()
+    root.destroy()
 
 root = tkinter.Tk()
 root.wm_title("Model")
@@ -267,7 +272,7 @@ model_menu.add_command(label= "Run model", command = run)
 model_menu.add_command(label = "Pause", command = pause)
 
 # Add command to quit tkinter
-model_menu.add_command(label = "Quit", command = root.destroy())
+model_menu.add_command(label = "Quit", command = exit_model)
 
 
 tkinter.mainloop()
