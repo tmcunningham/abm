@@ -69,7 +69,7 @@ except ValueError:
           "Defaulting to 200 sheep, 5 wolves, 1,000 moves, " + 
           "20 sheep neighbourhood and 30 wolf neighbourhood.")
 
-# Set whether message should be printed when each sheep is eaten based on input
+# Set whether message should be printed when a sheep is eaten based on input
 silent_input = str(input("Receive message when a sheep is eaten? (Y/N):\n"))
 
 # Set silent based on input. If not recognised, default to silent = True
@@ -147,8 +147,13 @@ def update(frame_number):
         wolves[i].move()
         
 
-    # Plot sheeps
+    # Plot environment
     matplotlib.pyplot.imshow(environment)
+    matplotlib.pyplot.tick_params(left = False, right = False , 
+                                  labelleft = False, labelbottom = False, 
+                                  bottom = False)
+    
+    # Plot sheeps
     for i in range(len(sheeps)):
         matplotlib.pyplot.scatter(x = sheeps[i].x, y = sheeps[i].y,
                                   color = "white"
@@ -166,13 +171,6 @@ def update(frame_number):
     # Create list of all sheeps stores
     # stores = [int(sheep.store) for sheep in sheeps]
     # print(stores)
-    
-    """
-    # Update stopping condition if all sheeps have over 70 store
-    if (all(i > 70 for i in [sheep.store for sheep in sheeps])):
-        carry_on = False
-        print("stopping condition - all sheeps have over 70 store")
-    """
     
     # Update stopping condition if all the sheep have been eaten
     if (len(sheeps) == 0):
@@ -193,7 +191,7 @@ def update(frame_number):
         with open("sheep stores.txt", "w", newline = "") as f3:
             writer = csv.writer(f3, delimiter = ",")
             writer.writerow(sheep_stores)
-    
+
 # Stop animation before max number of moves or if stopping condition met
 def gen_function():
     global carry_on
@@ -223,6 +221,17 @@ def gen_function():
         with open("sheep stores.txt", "a", newline = "") as f3:
             writer = csv.writer(f3, delimiter = ",")
             writer.writerow(sheep_stores)
+            
+"""
+# Save animation as GIF
+animation = matplotlib.animation.FuncAnimation(fig, update, interval=1, 
+                                               repeat = False,
+                                               frames = gen_function(),
+                                               save_count = 200)
+    
+animation.save("sheep_and_wolves.gif", 
+               writer = matplotlib.animation.PillowWriter(fps = 4))
+"""
 
 
 # Define function to pass to tkinter to run animation
@@ -243,16 +252,24 @@ def pause():
 
 root = tkinter.Tk()
 root.wm_title("Model")
-canvas = matplotlib.backends.backend_tkagg.FigureCanvasTkAgg(fig, master = root)
+canvas = matplotlib.backends.backend_tkagg.FigureCanvasTkAgg(fig, 
+                                                             master = root)
 canvas._tkcanvas.pack(side = tkinter.TOP, fill = tkinter.BOTH, expand = 1)
 menu_bar = tkinter.Menu(root)
 root.config(menu=menu_bar)
 model_menu = tkinter.Menu(menu_bar)
 menu_bar.add_cascade(label = "Model", menu=model_menu)
-model_menu.add_command(label= "Run model", command=run)
+
+# Add command to run model
+model_menu.add_command(label= "Run model", command = run)
+
+# Add command to pause model
 model_menu.add_command(label = "Pause", command = pause)
-model_menu.add_command(label = "Quit", command = root.destroy)
+
+# Add command to quit tkinter
+model_menu.add_command(label = "Quit", command = root.destroy())
 
 
 tkinter.mainloop()
+
 
