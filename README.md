@@ -1,4 +1,4 @@
-# Programming for Social Science Assessment 1: Agent Based Modelling practical
+# Programming for Social Science Assessment 1: Sheep and Wolves Agent Based Model
 
 This repository contains code to run an agent based model that simulates sheep eating grass in a field, while wolves hunt the sheep. This code was produced following the practical exercises for the GEOG5995 module run by the University of Leeds.
 
@@ -10,7 +10,7 @@ Within the **python** folder, this repository contains the following:
 - **in.txt:** text file containing the raster data for the sheeps' environment
 - **other folders:** one folder per chapter of the module (except chapter 3), containing earlier versions of the model and agent framework.
 
-## The model
+## About the Model
 
 ### Running the model
 
