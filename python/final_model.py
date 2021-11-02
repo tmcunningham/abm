@@ -4,7 +4,6 @@ Created on Tue Sep 14 12:33:27 2021
 
 @author: Tom Cunningham
 """
-
 # Set backend for matplotlib
 import matplotlib
 matplotlib.use("TkAgg")
@@ -18,17 +17,12 @@ import tkinter
 import requests
 import bs4
 import sys
+import timeit
 
-# Get data for sheep xs and ys
-r = requests.get("https://www.geog.leeds.ac.uk/courses/computing/practicals/python/agent-framework/part9/data.html")
-
-# Check response is 200
-# print(r)
-
-# Parse HTML and read ys and xs
-soup = bs4.BeautifulSoup(r.text, "html.parser")
-td_ys = soup.find_all(attrs={"class" : "y"})
-td_xs = soup.find_all(attrs={"class" : "x"})
+"""
+# Start time for reading in CSV
+start_time_csv = timeit.default_timer()
+"""
 
 # Create empty list for environment raster data
 environment = []
@@ -41,6 +35,12 @@ with open('in.txt', newline='') as f:
         for value in row: 
             rowlist.append(value)
         environment.append(rowlist)
+
+"""
+# End time for reading in CSV
+end_time_csv = timeit.default_timer()
+print("Time taken to read CSV: " + str(end_time_csv - start_time_csv))
+"""
 
 # Set number of sheep, wolves, random movements and size of neighbourhood
 # Use arguments given or use defaults if not all arguments provided as ints
@@ -70,7 +70,7 @@ except ValueError:
           "20 sheep neighbourhood and 30 wolf neighbourhood.")
 
 # Set whether message should be printed when a sheep is eaten based on input
-silent_input = str(input("Receive message when a sheep is eaten? (Y/N):\n"))
+silent_input = str(input("Receive message when a sheep is eaten? (Y/N): "))
 
 # Set silent based on input. If not recognised, default to silent = True
 if silent_input.upper() == "Y":
@@ -82,14 +82,41 @@ elif silent_input.upper() == "N":
 else:
     print("Could not recognise input. Messages will be muted.\n")
     silent = True
-    
+   
+"""
+# Start time for scraping web data
+start_time_web = timeit.default_timer()
+"""
+
+# Get data for sheep xs and ys
+print("Obtaining web data...")
+r = requests.get("https://www.geog.leeds.ac.uk/courses/computing/practicals/python/agent-framework/part9/data.html")
+
+# Check response is 200
+# print(r)
+
+# Parse HTML and read ys and xs
+soup = bs4.BeautifulSoup(r.text, "html.parser")
+td_ys = soup.find_all(attrs={"class" : "y"})
+td_xs = soup.find_all(attrs={"class" : "x"})
+
+"""
+# End time for scraping web data
+end_time_web = timeit.default_timer()
+print("Time taken to scrape web data: " + str(end_time_web - start_time_web))
+"""
+
 # Create empty lists for sheep and wolves
 sheeps = []
 wolves = []
 
 # Draw plot
 fig = matplotlib.pyplot.figure(figsize = (7,7), frameon = False)
-#fig.add_axes([0, 0, 1, 1])
+
+"""
+# Start time for creating sheep and wolves
+start_time_agents = timeit.default_timer()
+"""
 
 # Create sheeps
 for i in range(num_of_sheeps):
@@ -118,6 +145,13 @@ for i in range(num_of_wolves):
                                       environment = environment, 
                                       agents = sheeps,
                                       speed = 3))
+    
+"""
+# End time for creating sheep and wolves
+end_time_agents = timeit.default_timer()
+print("Time taken to create agents: " + 
+      str(end_time_agents - start_time_agents))
+"""
 
 # Create stopping condition for animation - runs if true
 carry_on = True
@@ -222,22 +256,20 @@ def gen_function():
             writer = csv.writer(f3, delimiter = ",")
             writer.writerow(sheep_stores)
             
-
+"""
 # Save animation as GIF
 animation = matplotlib.animation.FuncAnimation(fig, update, interval=1, 
                                                repeat = False,
                                                frames = gen_function(),
                                                save_count = 100)
-
 print("Saving animation...\n")
 
 animation.save("sheep_and_wolves.gif", 
                writer = matplotlib.animation.PillowWriter(fps = 4))
-               
+
 print("Animation saved.")
-
-
 """
+
 # Define function to pass to tkinter to run animation
 def run():
     global animation
@@ -252,12 +284,12 @@ def pause():
         animation.event_source.stop()
     except:
         print("No animation")
-        
 
 def exit_model():
     global root
-    root.quit()
     root.destroy()
+    matplotlib.pyplot.close("all")
+    
 
 root = tkinter.Tk()
 root.wm_title("Model")
@@ -281,4 +313,4 @@ model_menu.add_command(label = "Quit", command = exit_model)
 
 tkinter.mainloop()
 
-"""
+
