@@ -74,7 +74,7 @@ silent_input = str(input("Receive message when a sheep is eaten? (Y/N): "))
 
 # Set silent based on input. If not recognised, default to silent = True
 if silent_input.upper() == "Y":
-    print("Messages will not be muted.\n")
+    print("Messages will be printed.\n")
     silent = False
 elif silent_input.upper() == "N":
     print("Messages will be muted.\n")
@@ -217,7 +217,7 @@ def update(frame_number):
                 writer.writerow(row)
                 
         # Set sheep stores to just be "EATEN" for output file
-        sheep_stores = ["EATEN"] * num_of_sheeps
+        sheep_stores = ["X"] * num_of_sheeps
         
         # print(sheep_stores)
         
@@ -247,17 +247,17 @@ def gen_function():
         # Get list of sheeps current stores by ID
         # Set this to be "EATEN" if they have been eaten
         sheep_stores = []
-        for i in range(1,100):
+        for i in range(num_of_sheeps):
             if len([sheep.store for sheep in sheeps if sheep.id == i]) == 0:
-                sheep_stores.append("EATEN")
+                sheep_stores.append("X")
             else:
                 sheep_stores.append([sheep.store for \
-                                         sheep in sheeps if sheep.id == i][0])
+                                     sheep in sheeps if sheep.id == i][0])
             
         # print(sheep_stores)
         
         # Write sheeps current stores to a file
-        with open("sheep stores.txt", "a", newline = "") as f3:
+        with open("sheep stores.txt", "w", newline = "") as f3:
             writer = csv.writer(f3, delimiter = ",")
             writer.writerow(sheep_stores)
             
