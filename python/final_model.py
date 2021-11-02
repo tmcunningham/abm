@@ -222,18 +222,22 @@ def gen_function():
             writer = csv.writer(f3, delimiter = ",")
             writer.writerow(sheep_stores)
             
-"""
+
 # Save animation as GIF
 animation = matplotlib.animation.FuncAnimation(fig, update, interval=1, 
                                                repeat = False,
                                                frames = gen_function(),
-                                               save_count = 200)
-    
+                                               save_count = 100)
+
+print("Saving animation...\n")
+
 animation.save("sheep_and_wolves.gif", 
                writer = matplotlib.animation.PillowWriter(fps = 4))
+               
+print("Animation saved.")
+
+
 """
-
-
 # Define function to pass to tkinter to run animation
 def run():
     global animation
@@ -277,4 +281,4 @@ model_menu.add_command(label = "Quit", command = exit_model)
 
 tkinter.mainloop()
 
-
+"""
