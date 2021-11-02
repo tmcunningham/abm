@@ -10,7 +10,7 @@ Within the **python** folder, this repository contains the following:
 - **in.txt:** text file containing the raster data for the sheeps' environment
 - **other folders:** one folder per chapter of the module (except chapter 3), containing earlier versions of the model and agent framework.
 
-## The model
+## About the Model
 
 ### Running the model
 
