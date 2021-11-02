@@ -12,6 +12,16 @@ Within the **python** folder, this repository contains the following:
 
 ## About the Model
 
+### What the model does
+
+This model simulates, for each iteration, and for each sheep and wolf:
+- sheep moving in a field 1 space in a random diagonal direction (if they move off the edge of the field, they will loop to the other side)
+- sheep eating 10 units of the environment, which is removed from the environment and added to their store
+- sheep throwing up if they have eaten over 100 units (this amount will be added to the environment at the sheep's position)
+- sheep sharing their current store with any agent within their neighbourhood with less than them
+- wolves moving in the field 3 spaces in a random diagonal direction (if they move off the edge of the field, they will loop to the other side)
+- wolves eating a sheep if there is one within their defined neighbourhood and adding 1 to their store - the wolf moves to the sheep's position and the sheep is removed from the model
+
 ### Running the model
 
 To run the model from the command line, the user should run the following in the directory where the model, agent framework and input files are saved:
