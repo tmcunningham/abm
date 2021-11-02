@@ -88,7 +88,7 @@ else:
 start_time_web = timeit.default_timer()
 """
 
-# Get data for sheep xs and ys
+# Get data from course website for first sheep xs and ys
 print("Obtaining web data...")
 r = requests.get("https://www.geog.leeds.ac.uk/courses/computing/practicals/python/agent-framework/part9/data.html")
 
@@ -216,11 +216,11 @@ def update(frame_number):
             for row in environment:
                 writer.writerow(row)
                 
-        # Get list of sheeps current stores
-        sheep_stores = []
-        for sheep in sheeps:
-            sheep_stores.append(sheep.store)
-                    
+        # Set sheep stores to just be "EATEN" for output file
+        sheep_stores = ["EATEN"] * num_of_sheeps
+        
+        # print(sheep_stores)
+        
         # Write sheeps current stores to a file
         with open("sheep stores.txt", "w", newline = "") as f3:
             writer = csv.writer(f3, delimiter = ",")
@@ -244,10 +244,15 @@ def gen_function():
             for row in environment:
                 writer.writerow(row)
                 
-        # Get list of sheeps current stores
+        # Get list of sheeps current stores by ID
+        # Set this to be "EATEN" if they have been eaten
         sheep_stores = []
-        for sheep in sheeps:
-            sheep_stores.append(sheep.store)
+        for i in range(1,100):
+            if len([sheep.store for sheep in sheeps if sheep.id == i]) == 0:
+                sheep_stores.append("EATEN")
+            else:
+                sheep_stores.append([sheep.store for \
+                                         sheep in sheeps if sheep.id == i][0])
             
         # print(sheep_stores)
         
@@ -285,6 +290,7 @@ def pause():
     except:
         print("No animation")
 
+# Define function to quit the programme
 def exit_model():
     global root
     root.destroy()
