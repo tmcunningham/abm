@@ -1,2 +1,3 @@
-python/out.txt
-python/sheep\ stores.txt
+**/__pycache__/
+out.txt$
+sheep\ stores.txt$
