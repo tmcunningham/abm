@@ -8,7 +8,7 @@ Within the **python** folder, this repository contains the following:
 - **final_model.py:** file to be run to run the model
 - **agentframework.py:** file containing the agent class and sheep and wolf subclasses used in the model
 - **in.txt:** text file containing the raster data for the sheeps' environment
-- **test_distance_between.py:** file contain code to test the updated ```agent.distance_between``` method found in agentframework.py
+- **test_distance_between.py:** file containing code to test the updated ```agent.distance_between``` method found in agentframework.py
 - **other folders:** one folder per chapter of the module (except chapter 3), containing earlier versions of the model and agent framework.
 
 ## About the Model
