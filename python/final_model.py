@@ -158,13 +158,28 @@ carry_on = True
 
 # Define update function for animation
 def update(frame_number):
-      
+    """
+    Function used in animation to move sheep and wolves, make them eat, make 
+    sheep throw up and make sheep share with neighbours. Plots sheep and
+    wolves and updates stopping condition if all sheeps have been eaten.
+
+    Parameters
+    ----------
+    frame_number : int
+        Iteration of the model.
+
+    Returns
+    -------
+    None.
+
+    """
     global carry_on
     fig.clear()
     
     # Move sheeps
     for i in range(len(sheeps)):
         #print(sheeps[i])
+        # Shuffle order of sheeps so priority changes
         random.shuffle(sheeps)
         
         sheeps[i].eat()
@@ -175,6 +190,7 @@ def update(frame_number):
     # Move wolves
     for i in range(len(wolves)):
         #print(wolves[i])
+        # Shuffle order of wolves so priority changes
         random.shuffle(wolves)
         
         wolves[i].eat(wolf_neighbourhood, silent)
@@ -201,11 +217,6 @@ def update(frame_number):
         matplotlib.pyplot.xlim(0, len(environment[0]))
         matplotlib.pyplot.ylim(0, len(environment))
     
-    
-    # Create list of all sheeps stores
-    # stores = [int(sheep.store) for sheep in sheeps]
-    # print(stores)
-    
     # Update stopping condition if all the sheep have been eaten
     if (len(sheeps) == 0):
         carry_on = False
@@ -228,6 +239,16 @@ def update(frame_number):
 
 # Stop animation before max number of moves or if stopping condition met
 def gen_function():
+    """
+    Generator function to continue animation. Will stop yielding if all sheep
+    have been eaten (so carry_on = False) or if num_of_moves has been reached.
+
+    Yields
+    ------
+    i : int
+        Iteration of the model.
+
+    """
     global carry_on
     i = 0
     while (i < num_of_moves) & (carry_on):
@@ -277,6 +298,15 @@ print("Animation saved.")
 
 # Define function to pass to tkinter to run animation
 def run():
+    """
+    Runs the sheep and wolves animation and draws it. Can also be used to
+    unpause.
+
+    Returns
+    -------
+    None.
+
+    """
     global animation
     animation = matplotlib.animation.FuncAnimation(fig, update, interval=1, 
                                                    repeat = False, 
@@ -285,6 +315,14 @@ def run():
 
 # Define function to pause the animation in tkinter    
 def pause():
+    """
+    Pauses sheep and wolves animation.
+
+    Returns
+    -------
+    None.
+
+    """
     try:
         animation.event_source.stop()
     except:
@@ -292,16 +330,29 @@ def pause():
 
 # Define function to quit the programme
 def exit_model():
+    """
+    Destroys tkinter window, exits the mainloop and also closes extra figure
+    which is created when running code through IDE.
+
+    Returns
+    -------
+    None.
+
+    """
     global root
     root.destroy()
     matplotlib.pyplot.close("all")
     
-
+# Build main window of GUI and call it model
 root = tkinter.Tk()
 root.wm_title("Model")
+
+# Create canvas in window
 canvas = matplotlib.backends.backend_tkagg.FigureCanvasTkAgg(fig, 
                                                              master = root)
 canvas._tkcanvas.pack(side = tkinter.TOP, fill = tkinter.BOTH, expand = 1)
+
+# Create model menu in window
 menu_bar = tkinter.Menu(root)
 root.config(menu=menu_bar)
 model_menu = tkinter.Menu(menu_bar)
@@ -316,7 +367,7 @@ model_menu.add_command(label = "Pause", command = pause)
 # Add command to quit tkinter
 model_menu.add_command(label = "Quit", command = exit_model)
 
-
+# Ready GUI
 tkinter.mainloop()
 
 
