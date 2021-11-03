@@ -122,7 +122,8 @@ class Agent():
         other_agent : agent
             The agent to measure the distance from.
         """
-        return ((self.x - other_agent.x)**2 + (self.y - other_agent.y)**2)**0.5
+        return ((self.x - other_agent.x)**2 + \
+                (self.y - other_agent.y)**2)**0.5
              
     x = property(get_x, set_x, "x property")
     y = property(get_y, set_y, "y property")
@@ -222,7 +223,7 @@ class Wolf(Agent):
         neighbourhood : int
             The distance within which to look for a sheep.
         silent : bool
-            Whether to print a message when a sheep is eaten. Defaults to False.
+            Whether to print message when a sheep is eaten. Defaults to False.
         """
         distances = []
         sheeps = [agent for agent in self.agents if isinstance(agent, Sheep)]
@@ -230,7 +231,8 @@ class Wolf(Agent):
         if len(sheeps) > 0:
             for sheep in sheeps:
                 distances.append(self.distance_between(sheep))
-            min_distance = min(enumerate(distances), key = operator.itemgetter(1))
+            min_distance = min(enumerate(distances), 
+                               key = operator.itemgetter(1))
             closest_sheep = sheeps[min_distance[0]]
             if min_distance[1] < neighbourhood:
                 self.x = closest_sheep.x
