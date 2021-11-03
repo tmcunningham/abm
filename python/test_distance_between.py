@@ -2,7 +2,7 @@
 """
 Created on Wed Nov  3 16:33:13 2021
 
-@author: tcunn
+@author: Tom Cunningham
 """
 
 import agentframework
