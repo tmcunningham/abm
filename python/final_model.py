@@ -153,7 +153,7 @@ print("Time taken to create agents: " +
       str(end_time_agents - start_time_agents))
 """
 
-# Create stopping condition for animation - runs if true
+# Create stopping variable for animation - runs if true
 carry_on = True
 
 # Define update function for animation
@@ -161,7 +161,7 @@ def update(frame_number):
     """
     Function used in animation to move sheep and wolves, make them eat, make 
     sheep throw up and make sheep share with neighbours. Plots sheep and
-    wolves and updates stopping condition if all sheeps have been eaten.
+    wolves and updates stopping variable if all sheeps have been eaten.
 
     Parameters
     ----------
@@ -217,7 +217,7 @@ def update(frame_number):
         matplotlib.pyplot.xlim(0, len(environment[0]))
         matplotlib.pyplot.ylim(0, len(environment))
     
-    # Update stopping condition if all the sheep have been eaten
+    # Update stopping variable if all the sheep have been eaten
     if (len(sheeps) == 0):
         carry_on = False
         print("The wolves have won! All the sheep have been eaten!")
@@ -255,6 +255,7 @@ def gen_function():
         yield i
         i += 1
     else:
+        # Update stopping variable and print sheep survival rate
         carry_on = False
         print("Sheep left: " + str(len(sheeps)) + "\n" +
               "Survival rate: " + str(len(sheeps)/num_of_sheeps))
@@ -266,7 +267,7 @@ def gen_function():
                 writer.writerow(row)
                 
         # Get list of sheeps current stores by ID
-        # Set this to be "EATEN" if they have been eaten
+        # Set this to be "X" if they have been eaten
         sheep_stores = []
         for i in range(num_of_sheeps):
             if len([sheep.store for sheep in sheeps if sheep.id == i]) == 0:
