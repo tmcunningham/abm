@@ -12,6 +12,16 @@ Within the **python** folder, this repository contains the following:
 
 ## About the Model
 
+### What the model does
+
+This model simulates, for each iteration, and for each sheep and wolf:
+- sheep moving in a field 1 space in a random diagonal direction (if they move off the edge of the field, they will loop to the other side)
+- sheep eating 10 units of the environment, which is removed from the environment and added to their store
+- sheep throwing up if they have eaten over 100 units (this amount will be added to the environment at the sheep's position)
+- sheep sharing their current store with any agent within their neighbourhood with less than them
+- wolves moving in the field 3 spaces in a random diagonal direction (if they move off the edge of the field, they will loop to the other side)
+- wolves eating a sheep if there is one within their defined neighbourhood and adding 1 to their store - the wolf moves to the sheep's position and the sheep is removed from the model
+
 ### Running the model
 
 To run the model from the command line, the user should run the following in the directory where the model, agent framework and input files are saved:
@@ -27,14 +37,25 @@ Where the arguments are (default values given after argument names):
 
 Please note, **all** of the arguments must be specified. If arguments are missing, or if they are not provided as integers, the default values will be used in the model.
 
-When the above code is run, a GUI will be launched with a "Model" dropdown icon in the menu bar. The "Model" dropdown has three options:
+When the above code is run, the user will be asked if they want to receive a message every time a sheep is eaten by a wolf in the model (this message includes the sheep's ID, x and y co-ordinates, and store when it was eaten). These messages will be printed to the console. A GUI will then be launched with a "Model" dropdown icon in the menu bar. The "Model" dropdown has three options:
 - **Run model:** initiate the model. An animation will begin to play in the current window.
 - **Pause:** when the model is running, pause the animation. Select "Run model" again to resume.
-- **Quit:** end instance of tkinter.
+- **Quit:** exit the programme.
 
 Once the model has been started, it cannot be re-run without restarting the programme.
 
-### How the model works
+### Stopping conditions
 
-The model simulates 
+Unless the user quits the programme, the model will continue to run until either of the following stopping conditions are met:
+- the defined number of moves has been reached, or
+- all of the sheep have been eaten by the wolves.
 
+A message will then be printed to the console either displaying the survival rate of the sheep or the number of moves it took the wolves to eat all of the sheep, depending on the stopping condition.
+
+### Outputs
+
+In addition to the animation run in the GUI and the messages printed to the console, the final_model.py script produces two text file outputs:
+- **out.txt:** raster data of the sheep's environment after the model has been run - will be affected by sheep eating and throwing up.
+- **sheep stores.txt:** list of all sheep's stores, ordered by sheeps' id numbers, as of the end of the model. If a sheep has been eaten, the value in the corresponding position of the list will be ```X```.
+
+Both of these outputs will be overwritten each time the model is run.
