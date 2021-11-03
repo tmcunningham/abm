@@ -89,7 +89,6 @@ start_time_web = timeit.default_timer()
 """
 
 # Try to get data from course website for first sheep xs and ys
-# If ConnectionError then set x and y lists to be empty - will be randomised
 try:
     print("Obtaining web data...")
     r = requests.get("https://www.geog.leeds.ac.uk/courses/computing/"+
@@ -101,8 +100,8 @@ try:
     # Parse HTML and read ys and xs
     soup = bs4.BeautifulSoup(r.text, "html.parser")
     td_ys = soup.find_all(attrs={"class" : "y"})
-    td_xs = soup.find_all(attrs={"class" : "x"})
-    
+    td_xs = soup.find_all(attrs={"class" : "x"}) 
+# If ConnectionError then set x and y lists to be empty - will be randomised
 except requests.exceptions.ConnectionError:
     print("Could not connect to internet. " + 
           "Defaulting to all sheep random co-ordinates.")

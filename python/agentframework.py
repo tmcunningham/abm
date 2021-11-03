@@ -115,15 +115,24 @@ class Agent():
     
     def distance_between(self, other_agent):
         """
-        Measure Euclidean distance between this agent and another agent.
+        Measure Euclidean distance between this agent and another agent,
+        taking into account the wrap around nature of the environemnt.
         
         Parameters
         ----------
         other_agent : agent
             The agent to measure the distance from.
         """
-        return ((self.x - other_agent.x)**2 + \
-                (self.y - other_agent.y)**2)**0.5
+        return \
+            (min(
+                [((self.y - other_agent.y) % len(self.environment))**2,
+                  ((other_agent.y - self.y) % len(self.environment))**2]
+                ) + \
+             min(
+                 [((self.x - other_agent.x) % len(self.environment[0]))**2,
+                  ((other_agent.x - self.x) % len(self.environment[0]))**2]
+                 )
+             )**0.5
              
     x = property(get_x, set_x, "x property")
     y = property(get_y, set_y, "y property")
