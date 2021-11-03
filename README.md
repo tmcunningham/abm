@@ -40,7 +40,7 @@ Where the arguments are (default values given after argument names):
 Please note, **all** of the arguments must be specified. If arguments are missing, or if they are not provided as integers, the default values will be used in the model.
 
 When the above code is run, the user will be asked if they want to receive a message every time a sheep is eaten by a wolf in the model (this message includes the sheep's ID, x and y co-ordinates, and store when it was eaten). These messages will be printed to the console. A GUI will then be launched with a "Model" dropdown icon in the menu bar. The "Model" dropdown has three options:
-- **Run model:** initiate the model. An animation will begin to play in the current window.
+- **Run model:** initiate the model. An animation will begin to play in the current window. Sheep will be shown in white, wolves in black.
 - **Pause:** when the model is running, pause the animation. Select "Run model" again to resume.
 - **Quit:** exit the programme.
 
