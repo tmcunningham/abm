@@ -22,7 +22,7 @@ This model simulates, for each iteration, and for each sheep and wolf:
 - wolves moving in the field 3 spaces in a random diagonal direction (if they move off the edge of the field, they will loop to the other side)
 - wolves eating a sheep if there is one within their defined neighbourhood and adding 1 to their store - the wolf moves to the sheep's position and the sheep is removed from the model
 
-The user will be able to run an animation of the model in a GUI. See below for an example animation of the first 100 iterations of one run of the model: ![sheep_and_wolves_animation](https://github.com/tmcunningham/tmcunningham.github.io/blob/main/images/sheep_and_wolves.gif)
+The user will be able to run an animation of the model in a GUI.
 
 ### Running the model
 
